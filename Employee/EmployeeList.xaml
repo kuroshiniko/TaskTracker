@@ -1,0 +1,50 @@
+﻿<Window x:Class="TaskTracker.Employee.EmployeeList"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TaskTracker.Employee"
+        xmlns:converters="clr-namespace:TaskTracker.MVVM"
+        mc:Ignorable="d"
+        Title="EmployeeList" Height="530" Width="800" Closing="Window_Closing">
+    <Window.Resources>
+        <converters:TaskStatusToColorConverter x:Key="TaskStatusToColorConverter" />
+    </Window.Resources>
+    <Grid>
+        <Grid>
+                <Label Content="Ваши задания" FontSize="30" FontWeight="DemiBold" FontFamily="Century Gothic" Margin="10,0,364,276"/>
+                <Grid Margin="0,46,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="0.8*" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- ListBox с задачами -->
+                    <ListBox Grid.Column="0" ItemsSource="{Binding TasksView}" SelectedItem="{Binding SelectedTask}" Name="ListMVVM">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Margin="5">
+                                    <TextBlock FontSize="18" Text="{Binding Path=TaskName}" />
+                                    <TextBlock Text="{Binding Path=TaskText}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <!-- StackPanel с информацией о задаче и времени -->
+                    <StackPanel Grid.Column="1" DataContext="{Binding}">
+                        <TextBlock Text="Название задачи" FontSize="22" FontWeight="DemiBold" FontFamily="Century Gothic" Width="347"/>
+                        <TextBox Text="{Binding Path=DataContext.SelectedTask.TaskName, ElementName=ListMVVM}" TextWrapping="Wrap" BorderThickness="0" Height="30" Width="343" IsReadOnly="True"/>
+                        <TextBlock Text="Текст задачи" FontSize="14" FontWeight="DemiBold" FontFamily="Century Gothic" Margin="0,25,0,0" Width="344" />
+                        <TextBox Text="{Binding Path=DataContext.SelectedTask.TaskText, ElementName=ListMVVM}" TextWrapping="Wrap" BorderThickness="0" Height="113" Width="339" IsReadOnly="True" />
+
+                        <TextBlock Text="Число окончания задачи" FontSize="14" FontWeight="DemiBold" FontFamily="Century Gothic" Margin="0,25,0,0" Width="344" />
+                        <TextBox Text="{Binding Path=DataContext.SelectedTime.Time, ElementName=ListMVVM, StringFormat='{}{0:d}'}" TextWrapping="Wrap" BorderThickness="0" Height="30" Width="339" IsReadOnly="True" />
+                        <Button Background="LightGray" Margin="0,25,0,0" BorderThickness="0.7" Width="200" Click="Button_Click">
+                            <Label Content="Написать отчёт" FontSize="12" FontWeight="Bold" FontFamily="Century Gothic"/>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+        </Grid>
+    </Grid>
+</Window>

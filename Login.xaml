@@ -1,0 +1,21 @@
+﻿<Window x:Class="TaskTracker.Login"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TaskTracker"
+        mc:Ignorable="d"
+        Title="Login" Height="400" Width="450"
+        ResizeMode="NoResize">
+    <Grid>
+        <Label Content="Форма входа" FontSize="30" FontWeight="Bold" Margin="108,10,48,298" FontFamily="Century Gothic"/>
+        <Label Content="Введите пароль" FontSize="19" FontWeight="Bold" Margin="135,172,71,148" FontFamily="Century Gothic"/>
+        <Label Content="Введите логин" FontSize="19" FontWeight="Bold" Margin="143,105,81,217" FontFamily="Century Gothic"/>
+        <TextBox HorizontalAlignment="Center" x:Name="login" Margin="0,137,0,0" TextWrapping="Wrap" FontFamily="Century Gothic" FontWeight="DemiBold" Text="" VerticalAlignment="Top" Width="168" BorderThickness="0.7" Background="LightGray" Height="22"/>
+        <PasswordBox HorizontalAlignment="Center" x:Name="password" Margin="0,204,0,0"  FontFamily="Century Gothic" FontWeight="DemiBold"  VerticalAlignment="Top" Width="168" BorderThickness="0.7" Background="LightGray" Height="22" PasswordChanged="SecurePasswordBox_PasswordChanged"/>
+        <Button  HorizontalAlignment="Center" Margin="0,295,0,0" VerticalAlignment="Top" Background="LightGray" BorderThickness="0.7"  Width="110" Click="Button_Click">
+            <Label Content="Войти" FontSize="12" FontWeight="Bold"  FontFamily="Century Gothic"/>
+        </Button>
+        <TextBox x:Name="hiddenTextBox" Visibility="Hidden"/>
+    </Grid>
+</Window>

@@ -1,0 +1,83 @@
+﻿<Window x:Class="TaskTracker.TeamLead.TeamLeadList"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TaskTracker.TeamLead"
+        xmlns:converters="clr-namespace:TaskTracker.MVVM"
+        mc:Ignorable="d"
+        Title="TeamLeadList" Height="530" Width="800" Closing="Window_Closing">
+        <Window.Resources>
+            <converters:TaskStatusToColorConverter x:Key="TaskStatusToColorConverter" />
+        </Window.Resources>
+    <Grid>
+        <TabControl>
+            <TabItem Header="Задачи">
+                <Grid>
+                    <Label Content="Назначить задание" FontSize="30" FontWeight="DemiBold" FontFamily="Century Gothic" Margin="10,0,364,276"/>
+
+
+                    <!-- ListBox с задачами -->
+                    <ListBox Grid.Column="0" ItemsSource="{Binding TasksView}" SelectedItem="{Binding SelectedTask}" Name="ListMVVM" Margin="0,62,298,0">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Margin="5">
+                                    <TextBlock FontSize="18"  Text="{Binding Path=TaskName}"
+                                            Foreground="{Binding Converter={StaticResource TaskStatusToColorConverter}}"/>
+                                    <TextBlock Text="{Binding Path=TaskText}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <!-- StackPanel с информацией о задаче и времени -->
+                    <StackPanel DataContext="{Binding}" Margin="496,62,0,0">
+                        <TextBlock Text="Название задачи" FontSize="22" FontWeight="DemiBold" FontFamily="Century Gothic" Width="347"/>
+                        <TextBox Text="{Binding Path=DataContext.SelectedTask.TaskName, ElementName=ListMVVM}" TextWrapping="Wrap" BorderThickness="0" Height="30" Width="282" IsReadOnly="True"/>
+                        <TextBlock Text="Текст задачи" FontSize="14" FontWeight="DemiBold" FontFamily="Century Gothic" Margin="0,25,0,0" Width="344" />
+                        <TextBox Text="{Binding Path=DataContext.SelectedTask.TaskText, ElementName=ListMVVM }" TextWrapping="Wrap" BorderThickness="0" Height="113" Width="286" IsReadOnly="True" />
+
+                        <TextBlock Text="Число окончания задачи" FontSize="14" FontWeight="DemiBold" FontFamily="Century Gothic" Margin="0,25,0,0" Width="344" />
+                        <TextBox Text="{Binding Path=DataContext.SelectedTime.Time, ElementName=ListMVVM, StringFormat='{}{0:d}'}" TextWrapping="Wrap" BorderThickness="0" Height="30" Width="277" IsReadOnly="True" />
+                        <Button Background="LightGray" Margin="0,25,0,0" BorderThickness="0.7" Width="200" Click="Button_Click">
+                            <Label Content="Выбрать команду" FontSize="12" FontWeight="Bold" FontFamily="Century Gothic"/>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Просмотр отчётов" MouseDoubleClick="TabItem_MouseDoubleClick">
+                <Grid>
+                    <DataGrid Name="ReportGrid" CanUserAddRows="False" AutoGenerateColumns="False" Margin="-3,0,3,115" CanUserDeleteRows="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding TaskName}" Header="Название задачи" Width="0.2*"/>
+                            <DataGridTextColumn Binding="{Binding EmployeeName}" Header="Работник" Width="0.2*"/>
+                            <DataGridTextColumn Binding="{Binding ReportText}" Header="Текст отчёта" Width="0.6*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <StackPanel Orientation="Horizontal" Margin="0,376,0,55">
+                        <Label Content="Виды фукнций:"></Label>
+                        <Label Content="Напишите имя работника"></Label>
+                        <TextBox x:Name="EmployeeNameSort" Width="150" Height="20" Margin="10,-16,10,0"></TextBox>
+                        <Label Content="Напишите название задачи"></Label>
+                        <TextBox x:Name="TaskNameSort" Width="150" Height="20" Margin="10,-16,0,0"></TextBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,436,0,0" >
+                        <Button Name="SortByTaskname" Content="По названию задачи" Width="150" FontWeight="DemiBold" FontFamily="Century Gothic" Click="SortByTaskname_Click"></Button>
+                        <Button Name="SortByEmployeename" Content="По имени работника" Width="150" Margin="10,0,0,0" FontWeight="DemiBold" FontFamily="Century Gothic" Click="SortByEmployeename_Click"></Button> 
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Статистика сотрудников">
+                <Grid>
+                    <DataGrid Name="Statistic" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Name}" Header="Работник" Width="0.2*"/>
+                            <DataGridTextColumn Binding="{Binding Complite}" Header="Выполненные задачи" Width="0.2*"/>
+                            <DataGridTextColumn Binding="{Binding Uncomplite}" Header="Невыполненные задачи" Width="0.6*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

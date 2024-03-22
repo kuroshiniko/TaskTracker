@@ -1,0 +1,171 @@
+﻿<Window x:Class="TaskTracker.Admin.AdminList"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TaskTracker.Admin"
+        mc:Ignorable="d"
+        Title="AdminList" Height="550" Width="800"
+        ResizeMode="NoResize" Closing="Window_Closing">
+    <Grid>
+        <TabControl>
+            <TabItem Header="Добавить задание" MouseDoubleClick="TabItem_MouseDoubleClick">
+                <Grid Name="addGrid">
+                    <Label Content="Введите текст задачи" FontSize="15" FontWeight="DemiBold" FontFamily="Century Gothic" Margin="10,150,472,187"/>
+                    <Label Content="Введите заголовок задачи" FontSize="15" FontWeight="DemiBold" FontFamily="Century Gothic" Margin="10,65,472,245"/>
+                    <Label Content="Добавление задания" FontSize="30" FontWeight="DemiBold" FontFamily="Century Gothic" Margin="10,0,364,276"/>
+                    <Label Content="Введите дату окончания задания" FontSize="15" FontWeight="DemiBold" FontFamily="Century Gothic" Margin="17,325,357,-49"/>
+                    <Label Content="Выберите куратора задания" FontSize="15" FontWeight="DemiBold" FontFamily="Century Gothic" Margin="384,329,-10,-53"/>
+                    <ComboBox Name ="ListLead" SelectedIndex="0" Margin="384,362,157,0" Height="28" VerticalAlignment="Top"></ComboBox>
+                    <TextBox Name="Time" TextWrapping="Wrap" Background="LightGray" Margin="18,362,500,89" FontSize="12" FontFamily="Century Gothic"  />
+                    <TextBox Name="Text" TextWrapping="Wrap" Margin="17,188,44,187" Background="LightGray" FontSize="12" FontFamily="Century Gothic"/>
+                    <TextBox Name="Title" Margin="17,102,500,356" BorderThickness="0.5" Background="LightGray" FontFamily="Century Gothic" FontWeight="DemiBold"/>
+                    <Button  HorizontalAlignment="Left" Margin="18,430,0,0" VerticalAlignment="Top" Background="LightGray" BorderThickness="0.7"  Width="110" Click="AddButton_Click">
+                        <Label Content="Добавить" FontSize="12" FontWeight="Bold"  FontFamily="Century Gothic"/>
+                    </Button>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Просмотр заданий" >
+                <Grid>
+                    <Label Content="Удаление задания" FontSize="30" FontWeight="DemiBold" FontFamily="Century Gothic" Margin="10,0,364,276"/>
+                    <Button Background="LightGray" Margin="599,0,43,448" BorderThickness="0.7" Click="Update_Click">
+                        <Label Content="Обновить" FontSize="12" FontWeight="Bold" FontFamily="Century Gothic"/>
+                    </Button>
+                    <Grid Margin="0,46,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="0.8*" />
+                        </Grid.ColumnDefinitions>
+
+                        <!-- ListBox с задачами -->
+                        <ListBox Grid.Column="0" ItemsSource="{Binding TasksView}" SelectedItem="{Binding SelectedTask}" Name="ListMVVM">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Margin="5">
+                                        <TextBlock FontSize="18" Text="{Binding Path=TaskName}" />
+                                        <TextBlock Text="{Binding Path=TaskText}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
+                        <!-- StackPanel с информацией о задаче и времени -->
+                        <StackPanel Grid.Column="1" DataContext="{Binding}">
+                            <TextBlock Text="Название задачи" FontSize="22" FontWeight="DemiBold" FontFamily="Century Gothic" Width="347"/>
+                            <TextBox Text="{Binding Path=DataContext.SelectedTask.TaskName, ElementName=ListMVVM}" TextWrapping="Wrap" BorderThickness="0" Height="30" Width="343" IsReadOnly="True"/>
+                            <TextBlock Text="Текст задачи" FontSize="14" FontWeight="DemiBold" FontFamily="Century Gothic" Margin="0,25,0,0" Width="344" />
+                            <TextBox Text="{Binding Path=DataContext.SelectedTask.TaskText, ElementName=ListMVVM}" TextWrapping="Wrap" BorderThickness="0" Height="113" Width="339" IsReadOnly="True" />
+
+                            <TextBlock Text="Число окончания задачи" FontSize="14" FontWeight="DemiBold" FontFamily="Century Gothic" Margin="0,25,0,0" Width="344" />
+                            <TextBox Text="{Binding Path=DataContext.SelectedTime.Time, ElementName=ListMVVM, StringFormat='{}{0:d}'}" TextWrapping="Wrap" BorderThickness="0" Height="30" Width="339" IsReadOnly="True" />
+                            <Button Click="Button_Click" Content="Отметить как выполненное" Margin="0,10,0,0" Width="300" Height="30" FontFamily="Century Gothic"></Button>
+                            <Button Name="Uncomplite" Click="Uncomplite_Click" Content="Отметить как пропущенное" Margin="0,10,0,0" Width="300" Height="30" FontFamily="Century Gothic"></Button>
+
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Регистрация сотрудника">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="173*"/>
+                        <ColumnDefinition Width="621*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Заполните данные" FontSize="30" FontWeight="DemiBold" FontFamily="Century Gothic" Margin="10,0,364,276" Grid.ColumnSpan="2"/>
+                    <Label Content="Роль" FontSize="15" FontWeight="DemiBold" FontFamily="Century Gothic" Margin="18,144,464,271" Grid.ColumnSpan="2" RenderTransformOrigin="0.514,0.15"/>
+                    <Label Content="Имя" FontSize="15" FontWeight="DemiBold" FontFamily="Century Gothic" Margin="18,64,464,343" Grid.ColumnSpan="2"/>
+                    <Label Content="Должность" FontSize="15" FontWeight="DemiBold" FontFamily="Century Gothic" Margin="211,64,98,246" Grid.Column="1"/>
+                    <Label Content="Логин" FontSize="15" FontWeight="DemiBold" FontFamily="Century Gothic" Margin="16,211,358,65" Grid.ColumnSpan="2"/>
+                    <Label Content="Пароль" FontSize="15" FontWeight="DemiBold" FontFamily="Century Gothic" Margin="211,215,-10,61" Grid.Column="1"/>
+                    <TextBox Name="EmpLogin" TextWrapping="Wrap" Background="LightGray" Margin="18,248,500,206" FontSize="12" FontFamily="Century Gothic" Grid.ColumnSpan="2"  />
+                    <TextBox Name="EmpName" TextWrapping="Wrap" Margin="18,98,499,360" Background="LightGray" FontSize="12" FontFamily="Century Gothic" Grid.ColumnSpan="2"/>
+                    <TextBox Name="EmpPost" Margin="211,98,133,360" BorderThickness="0.5" Background="LightGray" FontFamily="Century Gothic"  Grid.Column="1"/>
+                    <Button Name="AddEmployee" HorizontalAlignment="Left" Margin="18,326,0,0" VerticalAlignment="Top" Background="LightGray" BorderThickness="0.7"  Width="110" Click="AddEmployee_Click">
+                        <Label Content="Добавить" FontSize="12" FontWeight="Bold"  FontFamily="Century Gothic"/>
+                    </Button>
+                    <ComboBox Name ="EmpRole" Margin="18,178,568,0" Height="28" VerticalAlignment="Top" Grid.ColumnSpan="2" SelectedIndex="0" FontFamily="Century Gothic" FontWeight="DemiBold">
+                        <ComboBoxItem Content="Работник"></ComboBoxItem>
+                        <ComboBoxItem Content="Куратор группы"></ComboBoxItem>
+                    </ComboBox>
+                    <TextBox x:Name="EmpPass" TextWrapping="Wrap" Background="LightGray" Margin="211,248,134,206" FontSize="12" FontFamily="Century Gothic" Grid.Column="1"  />
+                </Grid>
+            </TabItem>
+            <TabItem Header="Архив заданий" >
+                <Grid>
+                    <Label Content="Архив заданий" FontSize="30" FontWeight="DemiBold" FontFamily="Century Gothic" Margin="10,0,364,276"/>
+                    <Button Background="LightGray" Margin="599,0,43,448" BorderThickness="0.7" Click="Update_Click">
+                        <Label Content="Обновить" FontSize="12" FontWeight="Bold" FontFamily="Century Gothic"/>
+                    </Button>
+                    <Grid Margin="0,46,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="0.8*" />
+                        </Grid.ColumnDefinitions>
+
+                        <!-- ListBox с задачами -->
+                        <ListBox Grid.Column="0" ItemsSource="{Binding TasksView}" SelectedItem="{Binding SelectedTask}" Name="ListArchiveMVVM">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Margin="5">
+                                        <TextBlock FontSize="18" Text="{Binding Path=TaskName}" />
+                                        <TextBlock Text="{Binding Path=TaskText}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
+                        <!-- StackPanel с информацией о задаче и времени -->
+                        <StackPanel Grid.Column="1" DataContext="{Binding}">
+                            <TextBlock Text="Название задачи" FontSize="22" FontWeight="DemiBold" FontFamily="Century Gothic" Width="347"/>
+                            <TextBox Text="{Binding Path=DataContext.SelectedTask.TaskName, ElementName=ListArchiveMVVM}" TextWrapping="Wrap" BorderThickness="0" Height="30" Width="343" IsReadOnly="True"/>
+                            <TextBlock Text="Текст задачи" FontSize="14" FontWeight="DemiBold" FontFamily="Century Gothic" Margin="0,25,0,0" Width="344" />
+                            <TextBox Text="{Binding Path=DataContext.SelectedTask.TaskText, ElementName=ListArchiveMVVM}" TextWrapping="Wrap" BorderThickness="0" Height="113" Width="339" IsReadOnly="True" />
+                            <TextBlock Text="Число окончания задачи" FontSize="14" FontWeight="DemiBold" FontFamily="Century Gothic" Margin="0,25,0,0" Width="344" />
+                            <TextBox Text="{Binding Path=DataContext.SelectedTime.Time, ElementName=ListArchiveMVVM, StringFormat='{}{0:d}'}" TextWrapping="Wrap" BorderThickness="0" Height="30" Width="339" IsReadOnly="True" />
+                            <TextBlock Text="Число окончания задачи" FontSize="14" FontWeight="DemiBold" FontFamily="Century Gothic" Margin="0,25,0,0" Width="344" />
+                            <TextBox Text="{Binding Path=DataContext.SelectedTask.NotComplite, ElementName=ListArchiveMVVM}" TextWrapping="Wrap" BorderThickness="0" Height="113" Width="339" IsReadOnly="True" />
+
+
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Архив невыполненных заданий">
+                <Grid>
+                    <Label Content="Архив заданий" FontSize="30" FontWeight="DemiBold" FontFamily="Century Gothic" Margin="10,0,364,276"/>
+                    <Button Background="LightGray" Margin="599,0,43,448" BorderThickness="0.7" Click="Update_Click">
+                        <Label Content="Обновить" FontSize="12" FontWeight="Bold" FontFamily="Century Gothic"/>
+                    </Button>
+                    <Grid Margin="0,46,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="0.8*" />
+                        </Grid.ColumnDefinitions>
+
+                        <!-- ListBox с задачами -->
+                        <ListBox Grid.Column="0" ItemsSource="{Binding TasksView}" SelectedItem="{Binding SelectedTask}" Name="ListArchiveNMVVM">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Margin="5">
+                                        <TextBlock FontSize="18" Text="{Binding Path=TaskName}" />
+                                        <TextBlock Text="{Binding Path=TaskText}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
+                        <!-- StackPanel с информацией о задаче и времени -->
+                        <StackPanel Grid.Column="1" DataContext="{Binding}">
+                            <TextBlock Text="Название задачи" FontSize="22" FontWeight="DemiBold" FontFamily="Century Gothic" Width="347"/>
+                            <TextBox Text="{Binding Path=DataContext.SelectedTask.TaskName, ElementName=ListArchiveNMVVM}" TextWrapping="Wrap" BorderThickness="0" Height="30" Width="343" IsReadOnly="True"/>
+                            <TextBlock Text="Текст задачи" FontSize="14" FontWeight="DemiBold" FontFamily="Century Gothic" Margin="0,25,0,0" Width="344" />
+                            <TextBox Text="{Binding Path=DataContext.SelectedTask.TaskText, ElementName=ListArchiveNMVVM}" TextWrapping="Wrap" BorderThickness="0" Height="113" Width="339" IsReadOnly="True" />
+                            <TextBlock Text="Число окончания задачи" FontSize="14" FontWeight="DemiBold" FontFamily="Century Gothic" Margin="0,25,0,0" Width="344" />
+                            <TextBox Text="{Binding Path=DataContext.SelectedTime.Time, ElementName=ListArchiveNMVVM, StringFormat='{}{0:d}'}" TextWrapping="Wrap" BorderThickness="0" Height="30" Width="339" IsReadOnly="True" />
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

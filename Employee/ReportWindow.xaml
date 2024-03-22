@@ -1,0 +1,17 @@
+﻿<Window x:Class="TaskTracker.Employee.ReportWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TaskTracker.Employee"
+        mc:Ignorable="d"
+        Title="ReportWindow" Height="488" Width="800">
+    <Grid Margin="0,0,0,-38">
+        <Label Content="Отчёт" FontSize="30" FontWeight="DemiBold" FontFamily="Century Gothic" Margin="10,0,364,276"/>
+        <Label Content="Опишите работу, проделанную по этой задаче" FontSize="15" FontWeight="DemiBold" FontFamily="Century Gothic" Margin="10,59,364,217"/>
+        <TextBox Name="reportText" Margin="28,92,28,122" TextWrapping="Wrap" BorderThickness="0.7" Background="LightGray" FontFamily="Century Gothic" FontSize="12"></TextBox>
+        <Button  HorizontalAlignment="Left" Margin="28,400,0,0" VerticalAlignment="Top" Background="LightGray" BorderThickness="0.7"  Width="243" Height="46" Click="Button_Click">
+            <Label Content="Сформировать отчёт" FontSize="12" FontWeight="Bold"  FontFamily="Century Gothic"/>
+        </Button>
+    </Grid>
+</Window>

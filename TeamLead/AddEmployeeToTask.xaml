@@ -1,0 +1,21 @@
+﻿<Window x:Class="TaskTracker.TeamLead.AddEmployeeToTask"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TaskTracker.TeamLead"
+        mc:Ignorable="d"
+        Title="AddEmployeeToTask" Height="450" Width="800" Closed="Window_Closed">
+    <Grid Name="grid">
+        <Label Content="Выбрать команду" FontSize="30" FontWeight="DemiBold" FontFamily="Century Gothic" Margin="10,0,364,276"/>
+        <StackPanel x:Name="additionalComboBoxesPanel" Margin="10,43,509,10">
+            <ComboBox x:Name="AllEmp" Height="21" SelectedIndex="0" Width="252"/>
+        </StackPanel>
+        <Button Background="LightGray" Margin="10,352,541,18" BorderThickness="0.7" Click="Confirm_Click">
+            <Label Content="Выбрать команду" FontSize="12" FontWeight="Bold" FontFamily="Century Gothic"/>
+        </Button>
+        <Button Background="LightGray" Margin="283,352,268,18" BorderThickness="0.7" Click="Add_Click">
+            <Label Content="Добавить ещё сотрудника" FontSize="12" FontWeight="Bold" FontFamily="Century Gothic"/>
+        </Button>
+    </Grid>
+</Window>
